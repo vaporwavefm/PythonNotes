@@ -19,8 +19,6 @@
     of the incorrectly answered questions.
 '''
 
-import os
-
 correctAnsDatabase = ['B','D','A','A','C','A','B','A','C','D','B','C','D','A','D','C','C','B','D','A']
 
 def main():
