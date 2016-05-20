@@ -37,6 +37,34 @@
 # can also use '*' operator to make multiple copes of a string
 
 def main():
-    print(0)
+    '''
+    sumDigString()  
+    datePrinter()
+    '''
+    alphaTelNumTranslator()
+# Sum of Digits in String: ask user for numbers, and find sum of digts -> print
+def sumDigString():
+    userVal = int(input("Enter your number to find out the sum of its digits: "))
+    total = 0
+    while userVal != 0:
+        total += userVal % 10
+        userVal //= 10
+    print("Your total is:",total,".")
+
+# Date Printer: ask user for date (mm/dd/yyyy) and display date with month name (ex: 03/28/1995 would be March 28, 1995)
+def datePrinter():
+    months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+    dateString = input("Enter your date to be converted (mm/dd/yyyy): ")
+    monthString = int(dateString[0:2])
+    for i in range(0,len(months)):
+        if(monthString == i + 1):
+            monthString = months[i]
+            break
+    print("Your date is: ", monthString, " ",dateString[3:5],", ",dateString[6:], sep = "")
+
+def alphaTelNumTranslator():
+    userVal = input("Enter your alphanumeric telephone number to be converted to a numeric telephone number (XXX-XXX-XXXX): ")
+    partList = [ userVal[0:3],userVal[4:7],userVal[8:13] ]
+    
 # call main
 main()
