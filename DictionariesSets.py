@@ -57,13 +57,14 @@
 
 import pickle
 
-codes = {'A':'!','a':'@','B':'#','b':'$','C':'%','c':'^','D':'*','d':'(',"\n":"\n"}
+codes = {'A':'C','a':'c','B':'D','b':'d','C':'E','c':'e','D':'F','d':'f',
+         'E':'G','e':'g','F':'H','f':'h',"\n":"\n", " ": " "}
 
 def main():
     '''
     courseInfo()
-    '''
     fileEncryptAlphaToSym()
+    '''
     
 # Course info: create 3 dictionaries with preset data, prompt user for course number
 # and display the course room, instructor, and meeting time
@@ -87,7 +88,7 @@ def courseInfo():
             break
 
 # File Encrytion and Decryption: create two functions that will take the encryptFileEx.txt
-# file and encrypt it via a dictionary you will create (NOTE: this will only work for letter A-Da-d)
+# file and encrypt it via a dictionary you will create (NOTE: this will only work for letter A-Fa-f)
 # create another function to take the result and decrypt it once again
 def fileEncryptAlphaToSym():
     userFile = open('encryptFileEx.txt','r')
@@ -101,14 +102,14 @@ def fileEncryptAlphaToSym():
         for j in range(0, len(lineArr[i])):
             indivLineArr += str(lineArr[i][j])
         for i in range(0, len(indivLineArr)):
-            print(indivLineArr[i])
             for key in codes:
                 if(key == indivLineArr[i]):
                     finalStr += str(codes[key])
-    print(finalStr)
     userDest.write(finalStr)
+    print("\nFile successfully written to encryptFileDest.txt!")
     userFile.close()
     userDest.close()
+    
 # call main
 main()
 
