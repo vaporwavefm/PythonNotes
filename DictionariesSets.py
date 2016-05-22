@@ -57,7 +57,7 @@
 
 import pickle
 
-codes = {'A':'!','a':'@','B':'#','b':'$','C':'%','c':'^','D':'*','d':'('}
+codes = {'A':'!','a':'@','B':'#','b':'$','C':'%','c':'^','D':'*','d':'(',"\n":"\n"}
 
 def main():
     '''
@@ -91,21 +91,24 @@ def courseInfo():
 # create another function to take the result and decrypt it once again
 def fileEncryptAlphaToSym():
     userFile = open('encryptFileEx.txt','r')
+    userDest = open('encryptFileDest.txt','w')
     lineArr = []
     finalStr = ""
-    indivLetter = ""
     for line in userFile:
         lineArr.append(str(line))
-    for i in range(0,len(lineArr)):
+    for i in range(0, len(lineArr)):
         indivLineArr = []
-        for j in range(0,len(lineArr[i])):
-            indivLineArr.append(str(lineArr[i][j]))
-        for k in range(0, len(indivLineArr)):
-            indivLetter = str(indivLineArr[i:i+1])
+        for j in range(0, len(lineArr[i])):
+            indivLineArr += str(lineArr[i][j])
+        for i in range(0, len(indivLineArr)):
+            print(indivLineArr[i])
             for key in codes:
-                if(key == indivLetter):
+                if(key == indivLineArr[i]):
                     finalStr += str(codes[key])
     print(finalStr)
+    userDest.write(finalStr)
+    userFile.close()
+    userDest.close()
 # call main
 main()
 
