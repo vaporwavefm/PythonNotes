@@ -67,6 +67,7 @@ def main():
     fileEncryptAlphaToSym()
     fileEncryptSymToAlpha()
     '''
+    uniqueWords()
     
 # Course info: create 3 dictionaries with preset data, prompt user for course number
 # and display the course room, instructor, and meeting time
@@ -133,6 +134,11 @@ def fileEncryptSymToAlpha():
     print("\nFile successfully written to decryptFileDest.txt!")
     userFile.close()
     userDest.close()
+
+# Unique Words: read contents of a text file and display list of all unique words found
+def uniqueWords():
+    print(0)
+
 # call main
 main()
 
