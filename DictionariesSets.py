@@ -71,6 +71,7 @@ def courseInfo():
     courseRoom = {'CS101':'3004','CS102':'4501','CS103':'6755','NT110':'1244','CM241':'1411'}
     courseInstructor = {'CS101':'Haynes','CS102':'Alvarado','CS103':'Rich','NT110':'Burke','CM241':'Lee'}
     courseTime = {'CS101':'8:00pm','CS102':'9:00am','CS103':'10:00am','NT110':'11:00am','CM241':'1:00pm'}
+    print("The courses available in this program are CS101, CS102, CS103, NT110, and CM241")
     userValue = input("Enter your course number to find out its info: ")
     for key in courseRoom:
         if(key == userValue):
@@ -88,15 +89,23 @@ def courseInfo():
 # File Encrytion and Decryption: create two functions that will take the encryptFileEx.txt
 # file and encrypt it via a dictionary you will create (NOTE: this will only work for letter A-Da-d)
 # create another function to take the result and decrypt it once again
-
 def fileEncryptAlphaToSym():
     userFile = open('encryptFileEx.txt','r')
     lineArr = []
+    finalStr = ""
+    indivLetter = ""
     for line in userFile:
         lineArr.append(str(line))
     for i in range(0,len(lineArr)):
+        indivLineArr = []
         for j in range(0,len(lineArr[i])):
-            print(lineArr[i][j:j+1])
+            indivLineArr.append(str(lineArr[i][j]))
+        for k in range(0, len(indivLineArr)):
+            indivLetter = str(indivLineArr[i:i+1])
+            for key in codes:
+                if(key == indivLetter):
+                    finalStr += str(codes[key])
+    print(finalStr)
 # call main
 main()
 
