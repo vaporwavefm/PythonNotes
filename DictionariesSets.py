@@ -62,11 +62,9 @@ codes = {'A':'C','a':'c','B':'D','b':'d','C':'E','c':'e','D':'F','d':'f',
          'J':'L','j':'l',"\n":"\n", " ":" "}
 
 def main():
-    '''
     courseInfo()
     fileEncryptAlphaToSym()
     fileEncryptSymToAlpha()
-    '''
     uniqueWords()
     
 # Course info: create 3 dictionaries with preset data, prompt user for course number
@@ -137,8 +135,15 @@ def fileEncryptSymToAlpha():
 
 # Unique Words: read contents of a text file and display list of all unique words found
 def uniqueWords():
-    print(0)
-
+    userFile = open('uniqueWordsEx.txt','r')
+    theSet = set()
+    for line in userFile:
+        for i in range(0,len(line)):
+            theSet.add(line[i])
+    print("The unique letters of uniqueWordsEx.txt are: ")
+    for s in theSet:
+        print(" ".join(str(e) for e in s))
+        
 # call main
 main()
 
