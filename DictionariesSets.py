@@ -58,12 +58,14 @@
 import pickle
 
 codes = {'A':'C','a':'c','B':'D','b':'d','C':'E','c':'e','D':'F','d':'f',
-         'E':'G','e':'g','F':'H','f':'h',"\n":"\n", " ": " "}
+         'E':'G','e':'g','F':'H','f':'h','G':'I','g':'i','H':'J','h':'j','I':'K','i':'k',
+         'J':'L','j':'l',"\n":"\n", " ":" "}
 
 def main():
     '''
     courseInfo()
     fileEncryptAlphaToSym()
+    fileEncryptSymToAlpha()
     '''
     
 # Course info: create 3 dictionaries with preset data, prompt user for course number
@@ -88,7 +90,7 @@ def courseInfo():
             break
 
 # File Encrytion and Decryption: create two functions that will take the encryptFileEx.txt
-# file and encrypt it via a dictionary you will create (NOTE: this will only work for letter A-Fa-f)
+# file and encrypt it via a dictionary you will create (NOTE: this will only work for letter A-Ja-j)
 # create another function to take the result and decrypt it once again
 def fileEncryptAlphaToSym():
     userFile = open('encryptFileEx.txt','r')
@@ -109,7 +111,28 @@ def fileEncryptAlphaToSym():
     print("\nFile successfully written to encryptFileDest.txt!")
     userFile.close()
     userDest.close()
-    
+
+# fileEncryptSymToAlpha() basically uses the same algorithm as previous function
+# so this needs improvement in order to document better code
+def fileEncryptSymToAlpha():
+    userFile = open('decryptFileEx.txt','r')
+    userDest = open('decryptFileDest.txt','w')
+    lineArr = []
+    finalStr = ""
+    for line in userFile:
+        lineArr.append(str(line))
+    for i in range(0, len(lineArr)):
+        indivLineArr = []
+        for j in range(0, len(lineArr[i])):
+            indivLineArr += str(lineArr[i][j])
+        for i in range(0, len(indivLineArr)):
+            for key in codes:
+                if(str(key) == indivLineArr[i]):
+                    finalStr += str(codes[key])
+    userDest.write(finalStr)
+    print("\nFile successfully written to decryptFileDest.txt!")
+    userFile.close()
+    userDest.close()
 # call main
 main()
 
