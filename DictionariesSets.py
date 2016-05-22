@@ -43,11 +43,60 @@
 # can also use set2 <= set1 for subset, or set1 >= set2 for superset
 
 # 10.3 : Serializing Objects
+# The process of converting the object to a stream of bytes that can be saved to a file for later retreival...pickling
+# Python standard library provides a module called "pickle" for serializing (pickling) objects
+# You can: open a file for binary writing, call pickle module's "dump()" method to pickle object and
+# write it to the specified file...after you have pickled all the objects that you want to save to the file
+# close the file
+# to open a file:  outputfile = open('mydata.dat','wb')
+# and then use pickle.dump(object,file)...can pickle lists, tuples, dictionaries, sets, ints, floats, etc.
+# and then end with outputfile.close()
+# object = pickle.load(file)...object variable will reference object that was retrieved from the file and unpickled
+# if you try to read past the EOF, load function will raise and EOFError exception
 # 
 
-def main():
-    print(0)
+import pickle
 
+codes = {'A':'!','a':'@','B':'#','b':'$','C':'%','c':'^','D':'*','d':'('}
+
+def main():
+    '''
+    courseInfo()
+    '''
+    fileEncryptAlphaToSym()
+    
+# Course info: create 3 dictionaries with preset data, prompt user for course number
+# and display the course room, instructor, and meeting time
+def courseInfo():
+    courseRoom = {'CS101':'3004','CS102':'4501','CS103':'6755','NT110':'1244','CM241':'1411'}
+    courseInstructor = {'CS101':'Haynes','CS102':'Alvarado','CS103':'Rich','NT110':'Burke','CM241':'Lee'}
+    courseTime = {'CS101':'8:00pm','CS102':'9:00am','CS103':'10:00am','NT110':'11:00am','CM241':'1:00pm'}
+    userValue = input("Enter your course number to find out its info: ")
+    for key in courseRoom:
+        if(key == userValue):
+            print("The course room for", key, "is", courseRoom[key])
+            break
+    for key in courseInstructor:
+        if(key == userValue):
+            print("The course instructor for",key,"is",courseInstructor[key])
+            break
+    for key in courseTime:
+        if(key == userValue):
+            print("The course meeting time for",key,"is",courseTime[key])
+            break
+
+# File Encrytion and Decryption: create two functions that will take the encryptFileEx.txt
+# file and encrypt it via a dictionary you will create (NOTE: this will only work for letter A-Da-d)
+# create another function to take the result and decrypt it once again
+
+def fileEncryptAlphaToSym():
+    userFile = open('encryptFileEx.txt','r')
+    lineArr = []
+    for line in userFile:
+        lineArr.append(str(line))
+    for i in range(0,len(lineArr)):
+        for j in range(0,len(lineArr[i])):
+            print(lineArr[i][j:j+1])
 # call main
 main()
 
