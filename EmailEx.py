@@ -10,17 +10,28 @@
     from the file and unpickle it.
 '''
 
+import pickle
 def main():
-    emailDictionary = {}
+    go_again = 'y'
+    '''
     with open("emailDatabase.txt") as f:
         for line in f:
             (key,val) = line.split()
             emailDictionary[key] = val
-    print(emailDictionary)
-    print("The is the main menu for the Name and E-mail Program.\n"\
-          "1. Look up e-mail address\n" \
-          "2. Add a new name and e-mail address\n" \
-          "3. Change an existing e-mail address\n" \
-          "4. Delete an existing e-mail address\n")
+    
+    emailDictionary = pickle.load(open('emailDatabase.txt','rb'))
+    '''
+    print("This is the main menu for the Name and E-mail Program.")
+    while go_again == 'y' or go_again == 'Y':
+        menuOption = 0
+        while (menuOption < 1) or (menuOption > 4):
+            menuOption = int(input("1. Look up e-mail address\n" \
+                  "2. Add a new name and e-mail address\n" \
+                  "3. Change an existing e-mail address\n" \
+                  "4. Delete an existing e-mail address\n"))
+            if((menuOption < 1) or (menuOption > 4)):
+                print("Not a valid input. Try again.")
+        go_again = input("Would you like to perform another action? [y]: ")
+        
 #call main
 main()
