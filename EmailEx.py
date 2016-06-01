@@ -17,11 +17,12 @@ emailDictionary = {'Jorge Juarez':'jjuarez@albany.edu','Theo Vasilakos':'overlor
 pickle.dump(emailDictionary,open('emailDatabase.txt','wb'))
 '''
 
+userFile = 'emailDatabase.txt'
 
 def main():
     go_again = 'y'   
     print("This is the main menu for the Name and E-mail Program.")
-    while go_again.lower() =='y':
+    while go_again.lower() == 'y':
         menuOption = 0
         while (menuOption < 1) or (menuOption > 4):
             menuOption = int(input("1. Look up e-mail address\n" \
@@ -32,8 +33,7 @@ def main():
             if((menuOption < 1) or (menuOption > 5)):
                 print("Not a valid input. Try again.")
             elif(menuOption == 1):
-                inpName = input("Please enter the full name of the person's e-mail: ")
-                lookupEmail(inpName)
+                lookupEmail()
             elif(menuOption == 2):
                 addEmail()
             elif(menuOption == 3):
@@ -45,22 +45,26 @@ def main():
                 deleteEmail(inpName)
             elif(menuOption == 5):
                 printAll()
-        go_again = input("Would you like to perform another action? [y]: ")
+            
+        go_again = input("Would you like to perform another action? [y/n]: ")
     print("Thanks for using my wee lil' program!")
     
-def lookupEmail(inpName):
-    emailDictionary = pickle.load(open('emailDatabase.txt','rb'))
-    for key in emailDictionary:
-        if(str(inpName) == str(key)):
-            print("The is the email of your requested person:", emailDictionary[key])
-    
+def lookupEmail():
+    foundFlag = False
+    with open(userFile,'rb') as handle:
+        currEl = pickle.load(handle)
+        print(currEl)
+    '''
+    if(foundFlag == False):
+        print("User not found.")
+    '''    
 def addEmail():
     sampleD = {}
     name = input("Enter the new person's name: ")
     email = input("Enter the new person's e-mail: ")
     sampleD[name] = email
-    pickle.dump(sampleD, open('emailDatabase.txt','wb'))
-    print("Success!")
+    with open(userFile,'ab') as handle:
+        pickle.dump(sampleD,handle)
 
 def changeEmail(inpName, inpEmail):
     newPair = {inpName : inpEmail}
@@ -68,20 +72,28 @@ def changeEmail(inpName, inpEmail):
     for key in userFile:
         if(str(key) == inpName):
             del userFile[key]
-            pickle.dump(newPair,open('emailDatabase.txt','wb'))
+            pickle.dump(newPair,open('emailDatabase.txt','ab'))
             break
-            
+'''           
 def deleteEmail(inpName):
     userFile = pickle.load(open('emailDatabase.txt','rb'))
     for key in userFile:
         if(str(key) == inpName):
             del userFile[key]
             break
+'''
 
 def printAll():
-    userFile = pickle.load(open('emailDatabase.txt','rb'))
-    for key in userFile:
-        print(key, userFile[key])
-        
+    endOfFile = False
+    inpFile = open(userFile,'rb')
+    while not endOfFile:
+        try:
+            nextEl = pickle.load(inpFile)
+            print(nextEl)
+        except EOFError:
+            endOfFile = True
+    inpFile.close()
+
+       
 #call main
 main()
