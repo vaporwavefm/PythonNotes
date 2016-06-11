@@ -15,7 +15,7 @@
 # Most Python classes have a special method called __init__ (initializer method)
 
 
-# Pet Class: commented out to make way for Car Class
+# Pet Class: has initializer, with gets, sets, and printall
 
 class Pet:
 
@@ -61,9 +61,11 @@ class Car:
     def set_make(self,make):
         self.__make = make
 
+    # accelerate method increases speed by 5 every time it is called
     def accelerate(self):
         self.__speed += 5
 
+    # brake method decreases speed by 5 every time it is called, or otherwise hits 0
     def brake(self):
         if(self.__speed <= 5):
             self.__speed = 0
@@ -75,20 +77,16 @@ class Car:
 
 # Question class: used for trivia game for 2 players
 
-
-QuestionDic = {'Question 1': "Who was the winner of Rupaul's Drag Race Season 1?", 'Question 2': "Who was the winner of Rupaul's Drag Race Season 2?", \
-                'Question 3': "Who was the winner of Rupaul's Drag Race Season 3?", 'Question 4': "What was the winner of Rupaul's Drag Race Season 4?", \
-                'Question 5': "What was the winner of Rupaul's Drag Race All-Stars Season 1?"}
-
 class Question:
 
-    def __init__(self, question, ans1, ans2, ans3, ans4):
+    def __init__(self, question, ans1, ans2, ans3, ans4, corr):
         self.__question = question
         self.__ans1 = ans1
         self.__ans2 = ans2
         self.__ans3 = ans3
         self.__ans4 = ans4
-
+        self.__corr = corr
+        
     def get_question(self):
         return self.__question
     def get_ans1(self):
@@ -99,6 +97,8 @@ class Question:
         return self.__ans3
     def get_ans4(self):
         return self.__ans4
+    def get_correct(self):
+        return self.__corr
 
     def set_question(self,question):
         self.__question = question
@@ -110,8 +110,15 @@ class Question:
         self.__ans1 = ans3
     def set_ans4(self,ans4):
         self.__ans1 = ans4
+    def set_corr(self,corr):
+        self.__corr = corr
 
-        
+
+questionDict = {}
+myObject = Question("Which number is odd?","2","4","31","2008",'C')
+questionDict[myObject.get_question()] = myObject
+
+    
 def main():
     # these statements deal with the Pet Class created above
     '''
@@ -141,9 +148,30 @@ def main():
     # Trivia Game:
 
     playOneCount = 0
-    print("Hello there, we will now begin the Trivia Game. Player 1, please step up.")
-    
+    go_again = 'y'
+    userChoice = 0
+    print("Hello there. This is the menu for the Trivia Game Program. Please select an option")
+    while go_again.lower() == 'y':
+        userChoice = int(input("1. Play the game. \n" \
+              "2. ADMIN MODE: Configure a question. \n" \
+              "3. ADMIN MODE: Add a question. \n" \
+              "4. ADMIN MODE: Delete a question. \n" \
+              "5. ADMIN MODE: Print all questions. \n" \
+              "Enter your input: "))
+        if(userChoice == 3):
+            addQuestion()
 
+        go_again = input("Would you like to perform another action? [y/n]")
+            
+def addQuestion():
+    userQuest = input("Enter the question you wish to ask: ")
+    userAns1 = input("Now, enter the first choice: ")
+    userAns2 = input("Now, enter the second choice: ")
+    userAns3 = input("Now, enter the third choice: ")
+    userAns4 = input("Now, enter the fourth choice: ")
+    corrAns = input("Enter the correct choice [Input: A/B/C/D] :")
+    userObject = Question(userQuest,userAns1,userAns2,userAns3,userAns4,corrAns)
+    questionDict[userObject.get_question()] = userObject
     
 # call main
 
