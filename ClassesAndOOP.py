@@ -37,7 +37,8 @@ class Pet:
         return self.__age
  
     def printAll(self):
-        print("The name of your pet is", self.get_name(), ", their animal type is", self.get_type(), "and their age is", self.get_age(), ".")
+        print("The name of your pet is", self.get_name(), ", their animal type is", \
+              self.get_type(), "and their age is", self.get_age(), ".")
 
 
 # Car Class: gets and sets, also a brake and accelerate methods
@@ -73,7 +74,8 @@ class Car:
             self.__speed -= 5
 
     def printAll(self):
-        print("The year model of this car is", self.get_year_model(), ", the make is", self.get_make(), "and the current speed is", self.get_speed(), "mph.")
+        print("The year model of this car is", self.get_year_model(), ", the make is", \
+              self.get_make(), "and the current speed is", self.get_speed(), "mph.")
 
 # Question class: used for trivia game for 2 players
 
@@ -152,14 +154,15 @@ def main():
     print("Hello there. This is the menu for the Trivia Game Program. Please select an option")
     while go_again.lower() == 'y':
         userChoice = int(input("1. Play the game. \n" \
-              "2. ADMIN MODE: Configure a question. \n" \
-              "3. ADMIN MODE: Add a question. \n" \
-              "4. ADMIN MODE: Delete a question. \n" \
-              "5. ADMIN MODE: Print all questions. \n" \
+              "2. ADMIN MODE: Add a question. \n" \
+              "3. ADMIN MODE: Delete a question. \n" \
+              "4. ADMIN MODE: Print all questions. \n" \
               "Enter your input: "))
-        if(userChoice == 3):
+        if(userChoice == 2):
             addQuestion()
-        elif(userChoice == 5):
+        elif(userChoice == 3):
+            delQuestion()
+        elif(userChoice == 4):
             printAllQuestions()
         go_again = input("Would you like to perform another action? [y/n]: ")
     print("Thank you, come again!")
@@ -174,10 +177,20 @@ def addQuestion():
     userObject = Question(userQuest,userAns1,userAns2,userAns3,userAns4,corrAns)
     questionDict[userObject.get_question()] = userObject
 
-
+def delQuestion():
+    userQuest = input("Enter the question you wish to delete: ")
+    foundFlag = False
+    for key in questionDict:
+        if(userQuest == key):
+            del(key)
+            foundFlag = True
+            break
+    if(foundFlag == False):
+        print("Not found.")
+    
 def printAllQuestions():
     for key in questionDict:
-        print(key, "\nA. ", questionDict[key].get_ans1(), "\nB.", questionDict[key].get_ans2(), \
+        print(key, "\nA.", questionDict[key].get_ans1(), "\nB.", questionDict[key].get_ans2(), \
               "\nC.", questionDict[key].get_ans3(), "\nD.", questionDict[key].get_ans4(), \
               "\nThe correct answer for this question is Choice", questionDict[key].get_corr(), ".")
 
