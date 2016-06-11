@@ -119,7 +119,7 @@ class Question:
 questionDict = {}
 myObject = Question("Which number is odd?","2","4","31","2008",'C')
 questionDict[myObject.get_question()] = myObject
-
+triviaAdPass = "cookiecutter"
     
 def main():
     # these statements deal with the Pet Class created above
@@ -151,7 +151,7 @@ def main():
 
     go_again = 'y'
     userChoice = 0
-    print("Hello there. This is the menu for the Trivia Game Program. Please select an option")
+    print("Hello there. This is the menu for the Trivia Game Program. \nPlease select an option. ")
     while go_again.lower() == 'y':
         userChoice = int(input("1. Play the game. \n" \
               "2. ADMIN MODE: Add a question. \n" \
@@ -159,16 +159,31 @@ def main():
               "4. ADMIN MODE: Print all questions. \n" \
               "Enter your input: "))
         if(userChoice == 2):
-            addQuestion()
+            userPass = input("Enter the password: ")
+            if(valPass(userPass) == True):
+                addQuestion()
+            else:
+                print("Access denied.")
         elif(userChoice == 3):
-            delQuestion()
+            userPass = input("Enter the password: ")
+            if(valPass(userPass) == True):
+                delQuestion()
+            else:
+                print("Access denied.")
         elif(userChoice == 4):
-            printAllQuestions()
+            userPass = input("Enter the password: ")
+            if(valPass(userPass) == True):
+                printAllQuestions()
+            else:
+                print("Access denied.")
         go_again = input("Would you like to perform another action? [y/n]: ")
     print("Thank you, come again!")
+
+def valPass(userPass):
+    return triviaAdPass == userPass
     
 def addQuestion():
-    userQuest = input("Enter the question you wish to ask: ")
+    userQuest = input("Enter the question you wish to add: ")
     userAns1 = input("Now, enter the first choice: ")
     userAns2 = input("Now, enter the second choice: ")
     userAns3 = input("Now, enter the third choice: ")
@@ -181,8 +196,8 @@ def delQuestion():
     userQuest = input("Enter the question you wish to delete: ")
     foundFlag = False
     for key in questionDict:
-        if(userQuest == key):
-            del(key)
+        if(userQuest == questionDict[key].get_question()):
+            del(questionDict[key])
             foundFlag = True
             break
     if(foundFlag == False):
