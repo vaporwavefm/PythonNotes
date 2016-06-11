@@ -97,7 +97,7 @@ class Question:
         return self.__ans3
     def get_ans4(self):
         return self.__ans4
-    def get_correct(self):
+    def get_corr(self):
         return self.__corr
 
     def set_question(self,question):
@@ -147,7 +147,6 @@ def main():
 
     # Trivia Game:
 
-    playOneCount = 0
     go_again = 'y'
     userChoice = 0
     print("Hello there. This is the menu for the Trivia Game Program. Please select an option")
@@ -160,18 +159,28 @@ def main():
               "Enter your input: "))
         if(userChoice == 3):
             addQuestion()
-
-        go_again = input("Would you like to perform another action? [y/n]")
-            
+        elif(userChoice == 5):
+            printAllQuestions()
+        go_again = input("Would you like to perform another action? [y/n]: ")
+    print("Thank you, come again!")
+    
 def addQuestion():
     userQuest = input("Enter the question you wish to ask: ")
     userAns1 = input("Now, enter the first choice: ")
     userAns2 = input("Now, enter the second choice: ")
     userAns3 = input("Now, enter the third choice: ")
     userAns4 = input("Now, enter the fourth choice: ")
-    corrAns = input("Enter the correct choice [Input: A/B/C/D] :")
+    corrAns = input("Enter the correct choice [Input: A/B/C/D] : ")
     userObject = Question(userQuest,userAns1,userAns2,userAns3,userAns4,corrAns)
     questionDict[userObject.get_question()] = userObject
+
+
+def printAllQuestions():
+    for key in questionDict:
+        print(key, "\nA. ", questionDict[key].get_ans1(), "\nB.", questionDict[key].get_ans2(), \
+              "\nC.", questionDict[key].get_ans3(), "\nD.", questionDict[key].get_ans4(), \
+              "\nThe correct answer for this question is Choice", questionDict[key].get_corr(), ".")
+
     
 # call main
 
