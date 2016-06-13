@@ -17,6 +17,9 @@
 
 # Pet Class: has initializer, with gets, sets, and printall
 
+
+import pickle
+
 class Pet:
 
     def __init__(self, name, animal_type, age):
@@ -128,7 +131,8 @@ questionDict = { "Which number is odd?" : Question("Which number is odd?","2","4
                                                           "I also am the wrong answer.", "Don't even pick me, I'm wrong too (sighs)", 'A') \
                  }
 triviaAdPass = "cookiecutter"
-    
+userFile = "OOPtxt.txt"
+
 def main():
     # these statements deal with the Pet Class created above
     '''
@@ -160,6 +164,7 @@ def main():
     go_again = 'y'
     userChoice = 0
     print("Hello there. This is the menu for the Trivia Game Program. \nPlease select an option. ")
+    loadGame()
     while go_again.lower() == 'y':
         userChoice = int(input("[1] Play the game. \n" \
               "[2] ADMIN MODE: Add a question. \n" \
@@ -187,6 +192,7 @@ def main():
             else:
                 print("Access denied.")
         go_again = input("Would you like to perform another action? [y/n]: ")
+    saveGame()
     print("Thank you, come again!")
 
 def theActualGame():
@@ -236,6 +242,14 @@ def printAllQuestions():
               "\nC.", questionDict[key].get_ans3(), "\nD.", questionDict[key].get_ans4(), \
               "\nThe correct answer for this question is Choice", questionDict[key].get_corr(), ".")
 
+def loadGame():
+    with open(userFile,'rb') as handle:
+        pickle.load(handle)
+    
+def saveGame():
+    with open(userFile,'wb') as handle:
+        pickle.dump(questionDict,handle)
+    
     
 # call main
 
