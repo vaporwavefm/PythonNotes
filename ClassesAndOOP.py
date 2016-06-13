@@ -116,9 +116,17 @@ class Question:
         self.__corr = corr
 
 
-questionDict = {}
-myObject = Question("Which number is odd?","2","4","31","2008",'C')
-questionDict[myObject.get_question()] = myObject
+questionDict = { "Which number is odd?" : Question("Which number is odd?","2","4","31","2008",'C'), \
+                 "What color comes after red in the rainbow?" : Question("What color comes after red in the rainbow?", \
+                                                                         "blue","green","yellow","orange",'D'), \
+                 "Which number is prime?" : Question("Which number is prime?","20","19","22","2000010",'B'), \
+                 "Who was the first President of the US?" : Question("Who was the first President of the US?", "George Washington", \
+                                                                    "Alexander Hamilton","Ghandi","Smitty Werbenjagermanjensen",'A'), \
+                 "Who won Season 8 of Rupaul's Drag Race?": Question("Who won Season 8 of Rupaul's Drag Race?", "Kim Chi", "Naomi Smalls", \
+                                                                     "Bob the Drag Queen", "Chi Chi Kat Devayne", 'C'), \
+                 "Choose the correct response.": Question("Choose the correct response.", "Pick me! I'm correct!", "I'm the wrong answer.", \
+                                                          "I also am the wrong answer.", "Don't even pick me, I'm wrong too (sighs)", 'A') \
+                 }
 triviaAdPass = "cookiecutter"
     
 def main():
@@ -153,12 +161,14 @@ def main():
     userChoice = 0
     print("Hello there. This is the menu for the Trivia Game Program. \nPlease select an option. ")
     while go_again.lower() == 'y':
-        userChoice = int(input("1. Play the game. \n" \
-              "2. ADMIN MODE: Add a question. \n" \
-              "3. ADMIN MODE: Delete a question. \n" \
-              "4. ADMIN MODE: Print all questions. \n" \
+        userChoice = int(input("[1] Play the game. \n" \
+              "[2] ADMIN MODE: Add a question. \n" \
+              "[3] ADMIN MODE: Delete a question. \n" \
+              "[4] ADMIN MODE: Print all questions. \n" \
               "Enter your input: "))
-        if(userChoice == 2):
+        if(userChoice == 1):
+            theActualGame()
+        elif(userChoice == 2):
             userPass = input("Enter the password: ")
             if(valPass(userPass) == True):
                 addQuestion()
@@ -179,6 +189,23 @@ def main():
         go_again = input("Would you like to perform another action? [y/n]: ")
     print("Thank you, come again!")
 
+def theActualGame():
+    maxLimit = 5
+    userCorr = 0
+    for key in questionDict:
+        print(key, "\nA.", questionDict[key].get_ans1(), "\nB.", questionDict[key].get_ans2(), "\nC.", questionDict[key].get_ans3(), \
+              "\nD.", questionDict[key].get_ans4())
+        userAns = input("Enter your choice: ")
+        if(userAns.upper() == questionDict[key].get_corr()):
+            print("Correct! One point for you!")
+            userCorr += 1
+        else:
+            print("I'm sorry, that is not correct. The correct answer is", questionDict[key].get_corr())
+        maxLimit -= 1
+        if(maxLimit <= 0):
+            break
+    print("You have received", userCorr, "points, so that means you get a", 20 * userCorr, "% for this game. Congrats!")
+    
 def valPass(userPass):
     return triviaAdPass == userPass
     
@@ -189,7 +216,7 @@ def addQuestion():
     userAns3 = input("Now, enter the third choice: ")
     userAns4 = input("Now, enter the fourth choice: ")
     corrAns = input("Enter the correct choice [Input: A/B/C/D] : ")
-    userObject = Question(userQuest,userAns1,userAns2,userAns3,userAns4,corrAns)
+    userObject = Question(userQuest,userAns1,userAns2,userAns3,userAns4,corrAns.upper())
     questionDict[userObject.get_question()] = userObject
 
 def delQuestion():
