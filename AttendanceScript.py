@@ -12,13 +12,10 @@
     ex:
          2015-02-06 01:56:11, Nasir Memon
 '''
-
-# TODO: solve this problem lol
-
-userFile = 'attend_script.csv'
-headings = ['Name', 'Date']
 from datetime import datetime
 import csv
+
+userFile = 'attend_script.csv'
 
 def main():
     userDict = {}
@@ -26,12 +23,8 @@ def main():
     userName = input("Please enter your name to sign in: ")
     userDate = datetime.now().strftime('%Y-%m-%d %I:%M:%S')
     userDict[userName] = userDate
-    with open(userFile, 'w', newline = '') as myCSVFile:
-        csvWriter = csv.DictWriter(myCSVFile, fieldnames = headings, dialect = 'excel', quoting = csv.QUOTE_NONNUMERIC)
-        csvWriter.writeheader()
-        for data in userDict:
-            csvWriter.writerow(data)
-        
+    for key, value in userDict.items():
+        csv.writer(open(userFile, 'a', newline = '')).writerow([key,value])
     '''
     current_time = datetime.datetime.now().time()
     print(current_time)
