@@ -87,12 +87,166 @@ class MyButtonGUI:
     def do_something(self):
         tkinter.messagebox.showinfo('Response', "Thanks for clicking me. :)")
 
+# replica of the Tip, Tax, Total problem
+# ask user for subtotal, generates the recommended tip (15%), the tap, and the total (including tip and tax)
+# TODO: add in the tax and tip features
+
+class TipTaxTotalGUI:
+    def __init__(self):
+        self.main_window = tkinter.Tk()
+
+        self.top_frame = tkinter.Frame(self.main_window)
+        self.mid_frame = tkinter.Frame(self.main_window)
+        self.bottom_frame = tkinter.Frame(self.main_window)
+
+        # create widgets for top frame and pack
+        
+        self.prompt_label = tkinter.Label(self.top_frame, text = "Enter your subtotal: $")
+        self.subtotal_entry = tkinter.Entry(self.top_frame, width = 10)
+        
+        self.prompt_label.pack(side = 'left')
+        self.subtotal_entry.pack(side = 'left')
+
+        # create widget for mid frame
+        self.descr_label = tkinter.Label(self.mid_frame, text = "Your total is:")
+
+        # need a StringVar obj to associate with an output label...use obj's set method to store string of blank chars
+        self.value = tkinter.StringVar()
+
+        # create a label and associate it with StringVar obj...any value sotre in StringVar obj will automatically be
+        # be displayed in the label
+
+        self.total_label = tkinter.Label(self.mid_frame, textvariable = self.value)
+
+        #finally pack middle frame widgets
+
+        self.descr_label.pack(side = 'left')
+        self.total_label.pack(side = 'left')
+        
+        # create button widgets for the bottom frame
+
+        self.calc_button = tkinter.Button(self.bottom_frame, text = 'Find total', command = self.calc_total)
+        self.quit_button = tkinter.Button(self.bottom_frame, text = 'Quit', command = self.main_window.destroy)
+
+        # pack buttons and frames
+        
+        self.calc_button.pack(side = 'left')
+        self.quit_button.pack(side = 'left')
+
+        self.top_frame.pack()
+        self.mid_frame.pack()
+        self.bottom_frame.pack()
+
+        tkinter.mainloop()
+
+    def calc_total(self):
+        total = format(float(self.subtotal_entry.get()) * 1.08875, '.2f')
+
+        self.value.set(total)
+
+# object below to demonstrate radio button feature on tkinter
+
+class MyRadioGUI:
+    def __init__(self):
+        self.main_window = tkinter.Tk()
+
+        #two frames, one for Radiobuttons and another for regular button widgets
+
+        self.top_frame = tkinter.Frame(self.main_window)
+        self.bottom_frame = tkinter.Frame(self.main_window)
+
+        # IntVar is for association of Radiobuttons, it stores unique integer value of a selected RadioButton
+        # set to 1
+        self.radio_var = tkinter.IntVar()
+        self.radio_var.set(1)
+
+        # create radiobutton widgets for top frame and pack
+        self.rb1 = tkinter.Radiobutton(self.top_frame, text = "Mark Foster", variable= self.radio_var, value = 1)
+        self.rb2 = tkinter.Radiobutton(self.top_frame, text = "Mark Pontius", variable= self.radio_var, value = 2)
+        self.rb3 = tkinter.Radiobutton(self.top_frame, text = "Cubbie Fink", variable= self.radio_var, value = 3)
+
+        self.rb1.pack()
+        self.rb2.pack()
+        self.rb3.pack()
+
+        # create ok and quit buttons, pack them afterwards (along with top and bottom frames)
+        self.ok_button = tkinter.Button(self.bottom_frame, text = "OK", command = self.show_choice)
+        self.quit_button = tkinter.Button(self.bottom_frame, text = "Quit", command = self.main_window.destroy)
+
+        self.ok_button.pack(side = 'left')
+        self.quit_button.pack(side = 'right')
+
+        self.top_frame.pack()
+        self.bottom_frame.pack()
+
+        tkinter.mainloop()
+
+    def show_choice(self):
+        tkinter.messagebox.showinfo("Selection", "You selected option " + str(self.radio_var.get()))
+
+# object below shown to demonstrate usage of the checkbutton feature
+
+class MyCheckButtonGUI:
+    def __init__(self):
+        self.main_window = tkinter.Tk()
+
+        self.top_frame = tkinter.Frame(self.main_window)
+        self.bottom_frame = tkinter.Frame(self.main_window)
+
+        # create 3 IntVar objs to use with checkbuttons, and set all to 0
+        self.cb_var1 = tkinter.IntVar()
+        self.cb_var2 = tkinter.IntVar()
+        self.cb_var3 = tkinter.IntVar()
+
+        self.cb_var1.set(0)
+        self.cb_var2.set(0)
+        self.cb_var3.set(0)
+
+        # create checkbutton widgets in top frame, and pack
+        self.cb1 = tkinter.Checkbutton(self.top_frame, text = "Eggs", variable = self.cb_var1)
+        self.cb2 = tkinter.Checkbutton(self.top_frame, text = "Milk", variable = self.cb_var2)
+        self.cb3 = tkinter.Checkbutton(self.top_frame, text = "Cheese", variable = self.cb_var3)
+
+        self.cb1.pack()
+        self.cb2.pack()
+        self.cb3.pack()
+
+        # create OK and quit buttons, and pack
+        self.ok_button = tkinter.Button(self.bottom_frame, text = "OK", command = self.show_choice)
+        self.quit_button = tkinter.Button(self.bottom_frame, text = "Quit", command = self.main_window.destroy)
+
+        self.ok_button.pack(side = 'left')
+        self.quit_button.pack(side = 'left')
+
+        self.top_frame.pack()
+        self.bottom_frame.pack()
+
+        tkinter.mainloop()
+
+    # show_choice is callback function for pressing OK button
+    def show_choice(self):
+
+        # create message str and determine which checkbuttons are selected and build message string accordingly
+        self.message = "You selected choice(s):\n"
+
+        if self.cb_var1.get() == 1:
+            self.message = self.message + '1\n'
+        if self.cb_var2.get() == 1:
+            self.message = self.message + '2\n'
+        if self.cb_var3.get() == 1:
+            self.message = self.message + '3\n'
+
+        # display message in an info dialog box
+        tkinter.messagebox.showinfo("Selection", self.message)
+            
 def main():
     # uncomment each testX to see how each class above works
     
     # testLabelFrameGUI = MySampleLabelFrameGUI()
-    testButtonGUI = MyButtonGUI()
-
+    # testButtonGUI = MyButtonGUI()
+    # testTipTaxTotalGUI = TipTaxTotalGUI()
+    # testRadioGUI = MyRadioGUI()
+    testCheckButtonGUI = MyCheckButtonGUI()
     
 # call main
 main()
