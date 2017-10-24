@@ -39,10 +39,8 @@ def processURL(username):
 	for count in counts: # ALL THE REPLACES LOL
 		count.contents[0] = count.contents[0].replace("\n", "").replace(",", "").replace(" ", "")
 
-	total = t[0].contents[0].replace('<a href="/user/TreeckoEater/library">',"")
-	total = total.replace("</a>","")
-	total = total.replace(",","")
-
+	total = ''.join(c for c in t[0].contents[0] if c.isdigit())
+	
 	percents = range(50)
 	for i in range(0, len(percents)):
 		percents[i] = 100 * (float(counts[i].contents[0]) / float(total))
